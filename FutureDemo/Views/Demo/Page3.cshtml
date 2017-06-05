@@ -1,0 +1,35 @@
+﻿@using FutureDemo.Models
+@{
+    ViewBag.Title = "Page3";
+    var model = (List<UserData>)Model;
+}
+
+<h2>Show Data</h2>
+
+<table class="table table-striped">
+    <thead style="font-weight:bold">
+        <tr><td>Number</td><td>Add Date</td></tr>
+    </thead>
+    <tbody>
+        @{
+            if (model.Any())
+            {
+                foreach (var r in model)
+                {
+                    if (r.Display)
+                    {
+                    <tr>
+                        <td>@r.Data</td>
+                        <td>@r.AddDate</td>
+                    </tr>
+                    }
+                }
+            }
+            else
+            {
+                <tr><td colspan="4">no data</td></tr>
+                }
+
+            }
+    </tbody>
+</table>

@@ -1,0 +1,47 @@
+﻿
+@{
+    ViewBag.Title = "Page1";
+}
+
+<h2>Enter A Number</h2>
+
+
+
+    <hr />
+    <div class="form-group">
+        <label class="col-md-2 control-label" for="Password">Enter a number</label>
+        <div class="col-md-10">
+            <input class="form-control" type="number" name="number" id="txt_number" >
+        </div>
+    </div>
+<br /><br /> <br />
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="button" class="btn btn-default" value="Add"  id="btn_add"/>
+        </div>
+    </div>
+<hr />
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#btn_add").click(function () {
+            $.ajax({
+                url: '@Url.Action("AddNumber", "Demo")',
+                data: { number: $("#txt_number").val() },
+                dataType: 'json',
+                type: "POST",
+                success: function (result) {
+                    alert(result);
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+           
+                },
+                error: function (xhr, textStatus, errorThrown) {
+
+                }
+            });
+        });
+    });
+</script>

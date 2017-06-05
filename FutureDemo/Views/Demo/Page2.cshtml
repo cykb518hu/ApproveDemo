@@ -1,0 +1,62 @@
+﻿@using FutureDemo.Models
+@{
+    ViewBag.Title = "Page2";
+    var model = (List<UserData>)Model;
+}
+
+<h2>Approve Data</h2>
+
+<table class="table table-striped">
+    <thead style="font-weight:bold">
+        <tr><td>Number</td><td>Approved</td><td>Add Date</td><td>Action</td></tr>
+    </thead>
+    <tbody>
+        @{
+            if (model.Any())
+            {
+                foreach (var r in model)
+                {
+                    <tr><td>@r.Data</td><td>@r.Display</td><td>@r.AddDate</td><td>
+                        @if (!r.Display)
+                        {
+                            <button type='button' class='btn btn-default glyphicon glyphicon-edit btn_approve' aria-label='Left Align' data-number="@r.Data" id='btn_@r.Data' title="Approve" ></button>
+                        }
+                        </td></tr>
+                }
+            }
+            else
+            {
+                <tr><td colspan="4">no data</td></tr>
+            }
+
+        }
+    </tbody>
+</table>
+
+<script>
+    $(document).ready(function () {
+        $(".btn_approve").click(function () {
+          //  alert($(this).parent().prev().prev().html());
+          //  $(this).parent().prev().prev().html("True");
+            // return;
+            var id=$(this).attr("data-number");
+            $.ajax({
+                url: '@Url.Action("Approve", "Demo")',
+                data: { number: $(this).attr("data-number") },
+                dataType: 'json',
+                type: "POST",
+                success: function (result) {
+                    alert(result);
+                 
+                },
+                complete: function (XMLHttpRequest, textStatus) {
+                    $("#btn_" + id).parent().prev().prev().html("True");
+                    $("#btn_" + id).hide();
+                },
+                error: function (xhr, textStatus, errorThrown) {
+
+                }
+            });
+        });
+    });
+</script>
